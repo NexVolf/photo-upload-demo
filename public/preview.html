@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Preview - PhotoGallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="container">
+            <h1>PhotoGallery</h1>
+        </div>
+    </header>
+
+    <main class="container preview-container">
+        <a href="index.html" class="back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Gallery
+        </a>
+
+        <div class="card preview-card">
+            <div class="preview-image-container">
+                <div id="preview-bg" class="preview-bg"></div>
+                <img id="preview-img" src="" alt="Photo Preview">
+            </div>
+            <div class="preview-details">
+                <span id="preview-date" class="preview-date"></span>
+                <p id="preview-desc" class="preview-desc"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const src = params.get('src');
+            const date = params.get('date');
+            const desc = params.get('desc');
+
+            if (src) {
+                document.getElementById('preview-img').src = src;
+                // Set background image for the blur effect
+                const bgElement = document.getElementById('preview-bg');
+                if (bgElement) {
+                    bgElement.style.backgroundImage = `url('${src}')`;
+                }
+            }
+
+            if (date) {
+                document.getElementById('preview-date').textContent = new Date(date).toLocaleString(undefined, {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            if (desc) {
+                document.getElementById('preview-desc').textContent = desc;
+            }
+        });
+    </script>
+</body>
+
+</html>
